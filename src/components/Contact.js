@@ -12,28 +12,36 @@ export default Contact => {
 	const [isContactOpen, setContactOpen] = useState(false);
 
 	return (
-		<div className='contact'>
+		<ContactContainer>
 			<Button
-				onClick={() => setContactOpen(true)}
+				onClick={() => setContactOpen(now => !now)}
 				// initial='closed'
 				// animate='open'
 				// variants={variants}
 			>
-				<ContactIcon />
+				{isContactOpen ? <div>closed</div> : <ContactIcon />}
 			</Button>
-		</div>
+			<ContactIcon />
+			<ContactIcon />
+			<ContactIcon />
+			<ContactIcon />
+		</ContactContainer>
 	);
 };
 
-const Contact = styled(motion.div)`
+const ContactContainer = styled(motion.div)`
 	--contact-shift: 20px;
+	--button-dimensions: 50px;
+	/* direction: */
 	position: fixed;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: var(--button-dimensions);
 	right: var(--contact-shift);
 	bottom: var(--contact-shift);
 `;
 
 const Button = styled(motion.button)`
-	--button-dimensions: 50px;
 	--my-pink: #fcc;
 	background-color: var(--my-pink);
 	padding: 10px;
@@ -44,6 +52,7 @@ const Button = styled(motion.button)`
 	transition: transform 0.1s ease-in-out;
 	width: var(--button-dimensions);
 	height: var(--button-dimensions);
+	order: 2;
 	&:focus,
 	&:active {
 		outline: 2px solid var(--my-pink);
