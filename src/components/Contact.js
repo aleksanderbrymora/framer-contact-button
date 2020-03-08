@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ContactIcon, CloseIcon } from '../assets/Icons';
 
 const item = {
-	hidden: { opacity: 0, x: 70 },
-	show: { opacity: 1, x: 0 },
+	hidden: { x: 100 },
+	show: { x: 0 },
 };
 
 const linksContainer = {
@@ -14,6 +14,7 @@ const linksContainer = {
 		opacity: 1,
 		transition: {
 			staggerChildren: 0.1,
+			staggerDirection: -1,
 		},
 	},
 };
@@ -38,32 +39,27 @@ export default Contact => {
 						animate='show'
 						exit='hidden'
 					>
-						<motion.div variants={item}>
-							<OtherButton>
-								<ContactIcon />
-							</OtherButton>
-						</motion.div>
-						<motion.div variants={item}>
-							<OtherButton>
-								<ContactIcon />
-							</OtherButton>
-						</motion.div>
-						<motion.div variants={item}>
-							<OtherButton>
-								<ContactIcon />
-							</OtherButton>
-						</motion.div>
-						<motion.div variants={item}>
-							<OtherButton>
-								<ContactIcon />
-							</OtherButton>
-						</motion.div>
+						<ContactLink />
+						<ContactLink />
+						<ContactLink />
+						<ContactLink />
 					</Links>
 				)}
 			</AnimatePresence>
 		</ContactContainer>
 	);
 };
+
+const ContactLink = () => (
+	<motion.div
+		variants={item}
+		whileHover={{ scale: [0.95, 1.05], shadowY: 10, shadowBlur: 5 }}
+	>
+		<OtherButton>
+			<ContactIcon />
+		</OtherButton>
+	</motion.div>
+);
 
 const ContactContainer = styled(motion.div)`
 	--contact-shift: 20px;
@@ -81,7 +77,7 @@ const Links = styled(motion.div)`
 	--button-dimensions: 50px;
 	display: grid;
 	grid-gap: 10px;
-	grid-template-columns: var(--button-dimensions);
+	grid-template-columns: auto;
 `;
 
 const Button = styled(motion.button)`
@@ -98,15 +94,11 @@ const Button = styled(motion.button)`
 		outline: none;
 		-moz-outline-radius: 100%;
 	}
-	&:hover {
-		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
-		transform: translate3d(0, -3px, 0);
-	}
 	svg {
 		max-width: 100%;
 		max-height: 100%;
 		path {
-			fill: black;
+			fill: var(--my-pink);
 		}
 	}
 `;
@@ -120,14 +112,13 @@ const ContactButton = styled(Button)`
 	order: 2;
 	margin-top: 10px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	svg > path {
+		fill: white;
+	}
 	&:hover {
 		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
 		transform: translate3d(0, -3px, 0);
 	}
-	svg > path {
-		fill: white;
-	}
-
 	${({ clicked }) =>
 		clicked
 			? `
